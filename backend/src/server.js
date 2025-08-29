@@ -7,7 +7,15 @@ app.get("/", (req, res) => {
   res.send("Api is running successfully ✅");
 });
 
-connectDB();
-app.listen(ENV.PORT, () => {
-  console.log("Server is running on port ", ENV.PORT);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(ENV.PORT, () => {
+      console.log("Server is running on port ", ENV.PORT);
+    });
+  } catch (error) {
+    console.log("Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
+startServer();
